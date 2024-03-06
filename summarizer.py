@@ -5,10 +5,13 @@ import os
 import gradio as gr
 import pysqlite3
 import sys
+
 sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+
 # mengakses ke dokumen
 url = "https://raw.githubusercontent.com/Ichsan-Takwa/Generative-AI-Labs/main/Pembukaan_UUD_1945"
 output_path = "pembukaanUUD1945.txt"  # nama file lokal
+
 # Mengecek jika file sudah ada
 if not os.path.exists(output_path):
     # mengunduh file menggunakan wget
@@ -16,10 +19,13 @@ if not os.path.exists(output_path):
 loader = TextLoader('pembukaanUUD1945.txt')
 openai_api_key = "...."
 os.environ["OPENAI_API_KEY"] = openai_api_key
+
 # mengakses data
 data = loader.load()
+
 # Membuat instance untuk mencari data
 index = VectorstoreIndexCreator().from_loaders([loader])
+
 # Menjalankan gradio
 def summarize(query):
     return index.query(query)
